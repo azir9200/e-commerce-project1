@@ -56,6 +56,14 @@ const Header = () => {
                 <Moon size={24} />
               </button>
             </li>
+            <li>
+              <Link
+                className="rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                to={"/login"}
+              >
+                Login
+              </Link>
+            </li>
           </ul>
         </div>
 
