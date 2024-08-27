@@ -1,10 +1,15 @@
-import { Minus, Trash2 } from "lucide-react";
-
+import { Minus, Plus, Trash2 } from "lucide-react";
+import { useAppDispatch } from "../../redux/hooks";
+import { removeFromCart, updateQuantity } from "../../redux/features/cartSlice";
 const CartDetails = ({ product }: any) => {
-  // const dispatch = useAppDispatch()
-  const handleQuantity = () => {
-    //   const payload = {type,id}
-    //   dispatch(updateQuantity(payload))
+  const dispatch = useAppDispatch();
+  const handleQuantity = (type: string, id: string) => {
+    const payload = { type, id };
+    dispatch(updateQuantity(payload));
+  };
+
+  const handleRemove = (id: string) => {
+    dispatch(removeFromCart({ id }));
   };
 
   return (
@@ -22,14 +27,22 @@ const CartDetails = ({ product }: any) => {
       </div>
       <div className="flex items-center space-x-2">
         <button
-          onClick={() => handleQuantity}
+          onClick={() => handleQuantity("decrement", product.id)}
           className="bg-green-700 text-white p-2 rounded-full hover:bg-green-800"
         >
           <Minus size={18} />
         </button>
+        <span className="text-lg font-semibold">{product.quantity}</span>
+        <button
+          onClick={() => handleQuantity("increment", product.id)}
+          className="bg-green-700 text-white p-2 rounded-full hover:bg-green-800"
+        >
+          <Plus size={18} />
+        </button>
       </div>
       <button
-        // onClick={(e) => handleRemove(e, product.id)}
+        onClick={() => handleRemove(product.id)}
+        //  onClick={(e) => handleRemove(e, product.id)}
         className="bg-red-600 text-white p-2 rounded-full hover:bg-red-700"
       >
         <Trash2 size={18} />

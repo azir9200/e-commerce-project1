@@ -1,8 +1,11 @@
 import { useState } from "react";
 import Modal from "./Modal";
+import { useAppDispatch } from "../../redux/hooks";
+import { addToCart } from "../../redux/features/cartSlice";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ProductCart = ({ product }: { product: any }) => {
+  const dispatch = useAppDispatch();
   const [showModal, setShowModal] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -17,8 +20,8 @@ const ProductCart = ({ product }: { product: any }) => {
     setSelectedProduct(null);
     setShowModal(false);
   };
-  const handleAddToCart = () => {
-    console.log(handleAddToCart);
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
   };
 
   return (
@@ -53,7 +56,8 @@ const ProductCart = ({ product }: { product: any }) => {
             <button
               onClick={(e) => {
                 e.stopPropagation();
-                handleAddToCart();
+                handleAddToCart(product);
+                console.log(product, "azir ");
               }}
               className="bg-blue-400 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-800 transition duration-300 shadow-md hover:shadow-lg"
             >
