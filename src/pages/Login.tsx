@@ -1,48 +1,42 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-// import { login } from "../redux/authSlice";
-import { Link, useNavigate } from "react-router-dom";
-import { AppDispatch } from "../redux/store";
+import { Link } from "react-router-dom";
+import { RootState } from "../redux/store";
+import { useLoginMutation } from "../redux/api/auth/authApi";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import React from "react";
+import { setName, setPassword } from "../redux/features/loginSlice";
 
 const Login = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const { name, password } = useAppSelector((state: RootState) => state.login);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = (e: React.FormEvent) => {
+  const [login, { data }] = useLoginMutation();
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Perform your authentication logic here
-    if (email === "user@example.com" && password === "password") {
-      dispatch(login({ name: "John Doe", email }));
-      navigate("/dashboard"); // Redirect to dashboard or another page after login
-    } else {
-      alert("Invalid credentials");
-    }
+    const user = await login({ userName: name, password });
+    console.log("Azir Login", user);
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
-        <h2 className="text-2xl font-bold text-center mb-6 text-green-700">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-700 to-red-600 ">
+      <div className="w-full max-w-md bg-white shadow-md rounded-lg p-8">
+        <h2 className="text-2xl font-semibold text-center  text-green-700">
           Login
         </h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
+        <form onSubmit={handleSubmit}>
+          <div>
             <label
-              htmlFor="email"
-              className="block text-gray-700 font-medium mb-2"
+              htmlFor="name"
+              className="block text-sm text-gray-700 font-medium mb-2"
             >
-              Email
+              Name
             </label>
             <input
-              type="email"
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => dispatch(setName(e.target.value))}
               required
-              className="w-full p-3 border border-gray-300 rounded-lg"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
             />
           </div>
           <div className="mb-6">
@@ -56,7 +50,7 @@ const Login = () => {
               type="password"
               id="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => dispatch(setPassword(e.target.value))}
               required
               className="w-full p-3 border border-gray-300 rounded-lg"
             />

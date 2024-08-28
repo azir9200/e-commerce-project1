@@ -11,7 +11,7 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
   return (
-    <header className="bg-green-700 text-white rounded-sm px-3">
+    <header className="bg-gradient-to-r from-blue-200  to-gray-400 rounded-sm px-3">
       <nav className="container mx-auto flex items-center justify-between space-x-10 py-4 ">
         <Link to={"/"}>
           <p className="text-4xl rounded-lg  text-green-200">logo </p>
@@ -22,7 +22,7 @@ const Header = () => {
           <ul className="flex items-center space-x-5">
             <li>
               <Link
-                className="rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                className="bg-gradient-to-r from-emerald-200  to-blue-700 rounded-lg shadow-xl font-semibold text-white text-xl backdrop-blur-[2px] p-2 transition-transform hover:scale-105 hover:shadow-2xl  inline-block hover:bg-green-700  duration-300  "
                 to={"/products"}
               >
                 Products
@@ -30,7 +30,7 @@ const Header = () => {
             </li>
             <li>
               <Link
-                className="rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                className="bg-gradient-to-r from-emerald-200  to-blue-700 rounded-lg shadow-xl font-semibold text-white text-xl backdrop-blur-[2px] p-2 transition-transform transform hover:scale-105 hover:shadow-2xl  inline-block "
                 to={"/about"}
               >
                 About
@@ -38,10 +38,10 @@ const Header = () => {
             </li>
             <li className="relative">
               <Link
-                className="rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                className="bg-gradient-to-r from-emerald-200  to-blue-700 rounded-lg shadow-xl font-semibold text-white text-xl backdrop-blur-[2px] py-2 px-4 transition-transform transform hover:scale-105 hover:shadow-2xl  inline-block "
                 to={"/cart"}
               >
-                <ShoppingCart size={24} />
+                <ShoppingCart size={28} />
               </Link>
               <span className="rounded-full absolute top-[-10px] left-[20px] bg-primary text-white text-center size-[25px]">
                 {products.length}
@@ -51,14 +51,14 @@ const Header = () => {
             <li>
               <button
                 // onClick={handleToggleTheme}
-                className="rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                className="bg-gradient-to-r from-blue-200  to-blue-400 rounded-lg shadow-xl font-semibold text-white text-xl backdrop-blur-[2px] py-2 px-4  transition-transform transform hover:scale-105 hover:shadow-2xl  inline-block "
               >
-                <Moon size={24} />
+                <Moon size={28} />
               </button>
             </li>
             <li>
               <Link
-                className="rounded-lg backdrop-blur-[2px] p-1 inline-block"
+                className="bg-gradient-to-r from-blue-200  to-blue-700 rounded-lg shadow-xl font-semibold text-white text-xl backdrop-blur-[2px] p-2 transition-transform transform hover:scale-105 hover:shadow-2xl  inline-block "
                 to={"/login"}
               >
                 Login

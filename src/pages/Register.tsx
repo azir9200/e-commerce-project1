@@ -3,10 +3,11 @@ import {
   setName,
   setPassword,
   setRole,
-} from "../redux/api/RegisterSlice";
+} from "../redux/features/RegisterSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useSignUpMutation } from "../redux/api/auth/authApi";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const dispatch = useAppDispatch();
@@ -94,29 +95,58 @@ const Register = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
             />
           </div>
-          {/*           
-          <div className="mb-6">
+          {/* <div>
             <label
-              htmlFor="confirmPassword"
-              className="block text-gray-700 font-medium mb-2"
+              htmlFor="phone"
+              className="block text-sm text-gray-700 font-medium mb-2"
             >
-              Confirm Password
+              Phone
             </label>
             <input
-              type="password"
-              id="confirmPassword"
-              //   value={confirmPassword}
-              //   onChange={(e) => setConfirmPassword(e.target.value)}
+              type="phone"
+              id="phone"
+              value={phone}
+              onChange={(e) => dispatch(setPhone(e.target.value))}
               required
-              className="w-full p-3 border border-gray-300 rounded-lg"
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
             />
           </div> */}
+          {/* <div>
+            <label
+              htmlFor="address"
+              className="block text-sm text-gray-700 font-medium mb-2"
+            >
+              Address
+            </label>
+            <input
+              type="address"
+              id="address"
+              value={address}
+              onChange={(e) => dispatch(setAddress(e.target.value))}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
+            />
+          </div> */}
+
           <button
             type="submit"
             className="w-full bg-green-700 text-white p-3 rounded-lg hover:bg-green-800 transition-colors"
           >
             Register
           </button>
+          <div>
+            <p>
+              Already register ! Switch to
+              <span>
+                <Link
+                  to="/register"
+                  className="w-full bg-gradient-to-r from-green-700 to-red-600 text-white  px-3 rounded-lg hover:bg-green-800 transition-colors"
+                >
+                  Login
+                </Link>
+              </span>
+            </p>
+          </div>
         </form>
       </div>
     </div>

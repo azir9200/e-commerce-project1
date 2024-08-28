@@ -42,7 +42,7 @@ const ProductCart = ({ product }: { product: any }) => {
           alt={product.name}
           className="w-full h-48 object-cover transition-opacity duration-300 hover:opacity-75"
         />
-        <div className="p-4 flex flex-col flex-grow">
+        <div className="bg-blue-100 p-4 flex flex-col flex-grow">
           <div className="p-4 flex flex-col flex-grow">
             <h3 className="text-xl font-semibold text-blue-500 mb-2">
               {product.name}
