@@ -4,16 +4,25 @@ import { useLoginMutation } from "../redux/api/auth/authApi";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import React from "react";
 import { setName, setPassword } from "../redux/features/loginSlice";
+import { setToken } from "../redux/features/userSlice";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { name, password } = useAppSelector((state: RootState) => state.login);
+  const { username, password } = useAppSelector(
+    (state: RootState) => state.login
+  );
+  const { token } = useAppSelector((state: RootState) => state.user);
+  console.log("tok tok token", token);
 
-  const [login, { data }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = await login({ userName: name, password });
-    console.log("Azir Login", user);
+    const { data } = await login({ username: username, password });
+    const { token } = data?.data;
+    const user = jwtDecode(token);
+    console.log("Azir Login", token, "user", user);
+    dispatch(setToken(token));
   };
 
   return (
@@ -25,15 +34,15 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <div>
             <label
-              htmlFor="name"
+              htmlFor="username"
               className="block text-sm text-gray-700 font-medium mb-2"
             >
               Name
             </label>
             <input
               type="text"
-              id="name"
-              value={name}
+              id="username"
+              value={username}
               onChange={(e) => dispatch(setName(e.target.value))}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"

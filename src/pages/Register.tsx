@@ -6,21 +6,23 @@ import {
 } from "../redux/features/RegisterSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { useSignUpMutation } from "../redux/api/auth/authApi";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Register = () => {
   const dispatch = useAppDispatch();
-  const { name, email, password, role } = useAppSelector(
+  const { username, email, password, role } = useAppSelector(
     (state) => state.register
   );
 
   const [signUp] = useSignUpMutation();
 
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const user = await signUp({ name, email, role, password });
-    console.log("Azir", { name, email, role, password });
+    const user = await signUp({ username, email, role, password });
+    console.log("Azir", { username, email, role, password });
     console.log("output", user);
   };
   return (
@@ -32,15 +34,15 @@ const Register = () => {
         <form onSubmit={handleSubmit} className="mb-8 space-y-6">
           <div>
             <label
-              htmlFor="name"
+              htmlFor="username"
               className="block text-sm text-gray-700 font-medium mb-2"
             >
-              Name
+              username
             </label>
             <input
               type="text"
-              id="name"
-              value={name}
+              id="username"
+              value={username}
               onChange={(e) => dispatch(setName(e.target.value))}
               required
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
@@ -86,47 +88,24 @@ const Register = () => {
             >
               Password
             </label>
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={(e) => dispatch(setPassword(e.target.value))}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"} // Toggle between "text" and "password"
+                id="password"
+                value={password}
+                onChange={(e) => dispatch(setPassword(e.target.value))}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)} // Toggle showPassword state
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-sm text-gray-600"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
           </div>
-          {/* <div>
-            <label
-              htmlFor="phone"
-              className="block text-sm text-gray-700 font-medium mb-2"
-            >
-              Phone
-            </label>
-            <input
-              type="phone"
-              id="phone"
-              value={phone}
-              onChange={(e) => dispatch(setPhone(e.target.value))}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
-            />
-          </div> */}
-          {/* <div>
-            <label
-              htmlFor="address"
-              className="block text-sm text-gray-700 font-medium mb-2"
-            >
-              Address
-            </label>
-            <input
-              type="address"
-              id="address"
-              value={address}
-              onChange={(e) => dispatch(setAddress(e.target.value))}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg shadow-md"
-            />
-          </div> */}
 
           <button
             type="submit"
@@ -135,12 +114,12 @@ const Register = () => {
             Register
           </button>
           <div>
-            <p>
-              Already register ! Switch to
+            <p className="bg-slate-200">
+              Already register, Switch to
               <span>
                 <Link
-                  to="/register"
-                  className="w-full bg-gradient-to-r from-green-700 to-red-600 text-white  px-3 rounded-lg hover:bg-green-800 transition-colors"
+                  to="/login"
+                  className="w-full bg-gradient-to-r from-green-700 to-red-600 text-white ml-4 px-6  text-xl rounded-lg hover:bg-green-800 transition-colors"
                 >
                   Login
                 </Link>
